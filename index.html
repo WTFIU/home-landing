@@ -1,0 +1,26 @@
+<script>
+async function loadSubdomains() {
+  const list = await fetch('subdomains.json').then(r => r.json());
+  const container = document.getElementById('subdomain-list');
+
+  list.items.forEach(sub => {
+    const xmlUrl = `https://${sub}.26luck.org/${sub}.xml`;
+
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <button onclick="selectXML('${xmlUrl}')">
+        ${sub}
+      </button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function selectXML(url) {
+  window.location.href = url;
+}
+
+loadSubdomains();
+</script>
+
+<div id="subdomain-list"></div>
