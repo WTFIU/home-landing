@@ -1,26 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>26luck | Subdomain Picker</title>
+<style>
+  body {
+    background: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 40px;
+  }
+
+  h1 {
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px #39f;
+  }
+
+  #subdomain-list button {
+    display: block;
+    width: 250px;
+    margin: 10px auto;
+    padding: 12px;
+    background: #111;
+    border: 1px solid #333;
+    color: #39f;
+    font-size: 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  #subdomain-list button:hover {
+    background: #0a0a0a;
+    box-shadow: 0 0 10px #39f;
+  }
+</style>
+</head>
+<body>
+
+<h1>Select a Subdomain</h1>
+<div id="subdomain-list"></div>
+
 <script>
 async function loadSubdomains() {
-  const list = await fetch('subdomains.json').then(r => r.json());
-  const container = document.getElementById('subdomain-list');
+  try {
+    const data = await fetch("subdomains.json").then(res => res.json());
+    const container = document.getElementById("subdomain-list");
 
-  list.items.forEach(sub => {
-    const xmlUrl = `https://${sub}.26luck.org/${sub}.xml`;
+    data.items.forEach(sub => {
+      const xmlUrl = `https://${sub}.26luck.org/${sub}.xml`;
 
-    const div = document.createElement('div');
-    div.innerHTML = `
-      <button onclick="selectXML('${xmlUrl}')">
-        ${sub}
-      </button>
-    `;
-    container.appendChild(div);
-  });
-}
+      const btn = document.createElement("button");
+      btn.textContent = sub;
+      btn.onclick = () => window.location.href = xmlUrl;
 
-function selectXML(url) {
-  window.location.href = url;
+      container.appendChild(btn);
+    });
+
+  } catch (error) {
+    console.error("Failed to load subdomains:", error);
+  }
 }
 
 loadSubdomains();
 </script>
 
-<div id="subdomain-list"></div>
+</body>
+</html>
