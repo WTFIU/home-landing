@@ -49,7 +49,7 @@ async function loadSubdomains() {
     const container = document.getElementById("subdomain-list");
 
     data.items.forEach(sub => {
-      const xmlUrl = `https://${sub}.26luck.org/${sub}.xml`;
+      const xmlUrl = `https://${sub}.26luck.org/`;
 
       const btn = document.createElement("button");
       btn.textContent = sub;
